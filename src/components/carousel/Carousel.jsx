@@ -17,6 +17,11 @@ const Carousel = ({ data, loading }) => {
     const carouselContainer = useRef();
     const { url } = useSelector((state) => state.home)
     const navigate =useNavigate();
+
+    const navigation = (dir) => {
+
+    }
+
     return <div className="carousel">
         <ContentWrapper>
             <BsFillArrowLeftCircleFill
@@ -27,6 +32,26 @@ const Carousel = ({ data, loading }) => {
                 className="carouselRightNav arrow"
                 onClick={() => navigation("right")}
             />
+            {!loading ? (
+                <div className="carouselItems">
+                    {data?.map((item) => {
+                        const poseterUrl = item.poster_path ?
+                        url.poster + item.poster_path : 
+                        PosterFallback;
+                        return (
+                            <div 
+                            key={item.id} 
+                            className="carouselItem">
+                                <div className="posterBlock">
+                                    <Img src={poseterUrl} />
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            ) : (
+                <span>Loading...</span>
+            )}
         </ContentWrapper>
     </div>
 }
